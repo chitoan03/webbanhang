@@ -1,0 +1,85 @@
+﻿
+@using Webbanhang.Models
+@model IEnumerable<ThanhVien>
+@{
+    ViewBag.Title = "danhsachtv";
+    Layout = "~/Views/Layout/Adminlayouttt.cshtml";
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <a class="btn btn-primary" href="@Url.Action("DangkyAdmin", "Admin")" style="margin-left:28px">Thêm mới</a>
+    </div>
+</div>
+@grid.GetHtml(
+    tableStyle: "Table",
+    headerStyle: "GirdHead",
+    footerStyle: "GirdFooter",
+    rowStyle: "girdRow",
+    alternatingRowStyle: "girdAltRow",
+    columns: grid.Columns(
+    grid.Column("MaTV", "Mã thành viên"),
+    grid.Column("TaiKhoan", "Tên tài khoản"),
+    grid.Column("MatKhau", "Mật khẩu"),
+    grid.Column("Hoten", "Họ tên"),
+    grid.Column("DiaChi", "Địa chỉ"),
+    grid.Column("Email", "Gmail", format: p => Html.Raw(p.Email)),
+    grid.Column("DienThoai", "Số điện thoại", format: p => Html.Raw(p.DienThoai)),
+    grid.Column("MaLoaiTV", "Loại thành viên", format: p => p.MaLoaiTV != null ? p.LoaiThanhVien.TenLoaiTV : ""),
+    grid.Column("Chức năng", format: p => Html.ActionLink("Chỉnh sửa", "ChinhSuaTV", new { idtv = p.MaTV }))   
+    ))
+
+<style>
+    .Table {
+        width: 95%;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        font-size: 14px;
+        margin-left: 35px;
+        border: 2px solid #f1f1f1;
+    }
+
+    .GirdHead {
+        background-color: #ffffff;
+        color: #fff;
+        font-weight: bold;
+        border: 2px solid #f1f1f1;
+    }
+
+        .GirdHead th {
+            padding: 8px;
+            border-right: 2px solid #f1f1f1; /* Viền cho hàng dọc (cột) */
+        }
+
+    .girdRow {
+        background-color: #fff;
+    }
+
+    .girdAltRow {
+        background-color: #f9f9f9;
+    }
+
+    .girdRow, .girdAltRow {
+        border-bottom: 1px solid #ddd;
+    }
+
+        .girdRow td, .girdAltRow td {
+            padding: 8px;
+            border-right: 2px solid #f1f1f1; /* Viền cho hàng dọc (cột) */
+        }
+
+    .GirdFooter {
+        text-align: center;
+        font-size: 20px;
+    }
+
+        .GirdFooter a {
+            background: #4e73df;
+            color: white;
+            margin: 0 10px;
+            border-radius: 5px;
+            padding: 0 5px;
+        }
+</style>
+
+
